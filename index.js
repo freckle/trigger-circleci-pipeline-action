@@ -1,12 +1,12 @@
 import {
+  endGroup,
+  error as coreError,
   getInput,
+  info,
   setFailed,
   startGroup,
-  endGroup,
-  info,
-  error as coreError,
 } from "@actions/core";
-import { context } from "@actions/github";
+import {context} from "@actions/github";
 import axios from "axios";
 
 startGroup("Preparing CircleCI Pipeline Trigger");
@@ -27,37 +27,36 @@ const getBranch = () => {
   return ref;
 };
 
-const getTag = () => {
-  return context.sha
-};
+const getTag = () => { return context.sha };
 
 const headers = {
-  "content-type": "application/json",
-  "x-attribution-login": context.actor,
-  "x-attribution-actor-id": context.actor,
-  "Circle-Token": `${process.env.CCI_TOKEN}`,
+  "content-type" : "application/json",
+  "x-attribution-login" : context.actor,
+  "x-attribution-actor-id" : context.actor,
+  "Circle-Token" : `${process.env.CCI_TOKEN}`,
 };
 const parameters = {
-  GHA_Actor: context.actor,
-  GHA_Action: context.action,
-  GHA_Event: context.eventName,
-  GHA_Branch: getBranch()
+  GHA_Actor : context.actor,
+  GHA_Action : context.action,
+  GHA_Event : context.eventName,
+  GHA_Branch : getBranch()
 };
 
 const metaData = getInput("GHA_Meta");
 if (metaData.length > 0) {
-  Object.assign(parameters, { GHA_Meta: metaData });
+  Object.assign(parameters, {GHA_Meta : metaData});
 }
 
 const body = {
-  parameters: parameters,
+  parameters : parameters,
 };
 
 const tag = getTag();
 
-Object.assign(body, { tag: tag });
+Object.assign(body, {tag : tag});
 
-const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;
+const url =
+    `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;
 
 info(`Triggering CircleCI Pipeline for ${repoOrg}/${repoName}`);
 info(`Triggering URL: ${url}`);
@@ -65,16 +64,15 @@ info(`Triggering tag: ${tag}`);
 info(`Parameters:\n${JSON.stringify(parameters)}`);
 endGroup();
 
-axios
-  .post(url, body, { headers: headers })
-  .then((response) => {
-    startGroup("Successfully triggered CircleCI Pipeline");
-    info(`CircleCI API Response: ${JSON.stringify(response.data)}`);
-    endGroup();
-  })
-  .catch((error) => {
-    startGroup("Failed to trigger CircleCI Pipeline");
-    coreError(error);
-    setFailed(error.message);
-    endGroup();
-  });
+axios.post(url, body, {headers : headers})
+    .then((response) => {
+      startGroup("Successfully triggered CircleCI Pipeline");
+      info(`CircleCI API Response: ${JSON.stringify(response.data)}`);
+      endGroup();
+    })
+    .catch((error) => {
+      startGroup("Failed to trigger CircleCI Pipeline");
+      coreError(error);
+      setFailed(error.message);
+      endGroup();
+    });
