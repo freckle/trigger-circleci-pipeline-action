@@ -26,14 +26,9 @@ const getBranch = () => {
   }
   return ref;
 };
+
 const getTag = () => {
-  const defaultBranch = context.payload.repository?.default_branch;
-  const currentBranch = getBranch();
-  if (ref.startsWith("refs/tags/")) {
-    return ref.substring(10);
-  } else if (context.eventName === "push" && defaultBranch === currentBranch) {
-    return context.sha;
-  }
+  return context.sha
 };
 
 const headers = {
@@ -46,6 +41,7 @@ const parameters = {
   GHA_Actor: context.actor,
   GHA_Action: context.action,
   GHA_Event: context.eventName,
+  GHA_Branch: getBranch()
 };
 
 const metaData = getInput("GHA_Meta");
@@ -58,23 +54,14 @@ const body = {
 };
 
 const tag = getTag();
-const branch = getBranch();
 
-if (tag) {
-  Object.assign(body, { tag });
-} else {
-  Object.assign(body, { branch });
-}
+Object.assign(body, { tag: tag });
 
 const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;
 
 info(`Triggering CircleCI Pipeline for ${repoOrg}/${repoName}`);
 info(`Triggering URL: ${url}`);
-if (tag) {
-  info(`Triggering tag: ${tag}`);
-} else {
-  info(`Triggering branch: ${branch}`);
-}
+info(`Triggering tag: ${tag}`);
 info(`Parameters:\n${JSON.stringify(parameters)}`);
 endGroup();
 
