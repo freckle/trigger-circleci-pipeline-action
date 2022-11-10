@@ -28,7 +28,7 @@ const getBranch = () => {
 };
 
 const getTag = () => {
-  return context.sha
+  return context.sha;
 };
 
 const headers = {
@@ -41,7 +41,7 @@ const parameters = {
   GHA_Actor: context.actor,
   GHA_Action: context.action,
   GHA_Event: context.eventName,
-  GHA_Branch: getBranch()
+  GHA_Branch: getBranch(),
 };
 
 const metaData = getInput("GHA_Meta");
