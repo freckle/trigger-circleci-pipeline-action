@@ -1,10 +1,10 @@
 import {
+  endGroup,
+  error as coreError,
   getInput,
+  info,
   setFailed,
   startGroup,
-  endGroup,
-  info,
-  error as coreError,
 } from "@actions/core";
 import { context } from "@actions/github";
 import axios from "axios";
