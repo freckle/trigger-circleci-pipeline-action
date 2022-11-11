@@ -12719,10 +12719,6 @@ const getBranch = () => {
   return ref;
 };
 
-const getTag = () => {
-  return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.sha;
-};
-
 const headers = {
   "content-type": "application/json",
   "x-attribution-login": _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.actor,
@@ -12745,7 +12741,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = getTag();
+const tag = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)("GHA_Head_SHA");
 
 Object.assign(body, { tag: tag });
 

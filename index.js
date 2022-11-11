@@ -27,10 +27,6 @@ const getBranch = () => {
   return ref;
 };
 
-const getTag = () => {
-  return context.sha;
-};
-
 const headers = {
   "content-type": "application/json",
   "x-attribution-login": context.actor,
@@ -53,7 +49,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = getTag();
+const tag = getInput("GHA_Head_SHA");
 
 Object.assign(body, { tag: tag });
 
