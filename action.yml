@@ -7,7 +7,7 @@ inputs:
   GHA_Meta:
     required: false
     description: 'An optional additional metadata parameter. Will be available on the CircleCI pipeline as GHA_Meta'
-  GHA_Head_SHA:
+  GHA_SHA:
     required: false
     description: 'An optional additional metadata parameter. Will be used as the tag'
 runs:

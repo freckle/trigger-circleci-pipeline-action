@@ -12741,7 +12741,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)("GHA_Head_SHA");
+const tag = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)("GHA_SHA");
 
 Object.assign(body, { tag: tag });
 

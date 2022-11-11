@@ -49,7 +49,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = getInput("GHA_Head_SHA");
+const tag = getInput("GHA_SHA");
 
 Object.assign(body, { tag: tag });
 
