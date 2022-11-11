@@ -12719,6 +12719,14 @@ const getBranch = () => {
   return ref;
 };
 
+const getSha = () => {
+  if (ref.startsWith("refs/pull/") && headRef) {
+      return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.sha
+  } else {
+    return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.sha
+  }
+}
+
 const headers = {
   "content-type": "application/json",
   "x-attribution-login": _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.actor,
@@ -12741,7 +12749,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)("GHA_SHA");
+const tag = getSha();
 
 Object.assign(body, { tag: tag });
 

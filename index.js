@@ -27,6 +27,14 @@ const getBranch = () => {
   return ref;
 };
 
+const getSha = () => {
+  if (ref.startsWith("refs/pull/") && headRef) {
+    return context.payload.pull_request.head.sha;
+  } else {
+    return context.sha;
+  }
+};
+
 const headers = {
   "content-type": "application/json",
   "x-attribution-login": context.actor,
@@ -49,7 +57,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = getInput("GHA_SHA");
+const tag = getSha();
 
 Object.assign(body, { tag: tag });
 
