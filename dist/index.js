@@ -12720,12 +12720,8 @@ const getBranch = () => {
 };
 
 const getSha = () => {
-  if (ref.startsWith("refs/pull/") && headRef) {
-      return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.sha
-  } else {
-    return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.sha
-  }
-}
+  return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.sha ?? _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.sha;
+};
 
 const headers = {
   "content-type": "application/json",

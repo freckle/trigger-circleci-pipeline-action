@@ -28,11 +28,7 @@ const getBranch = () => {
 };
 
 const getSha = () => {
-  if (ref.startsWith("refs/pull/") && headRef) {
-    return context.payload.pull_request.head.sha;
-  } else {
-    return context.sha;
-  }
+  return context.payload?.pull_request?.head?.sha ?? context.sha;
 };
 
 const headers = {
