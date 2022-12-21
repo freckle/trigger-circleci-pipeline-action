@@ -69,14 +69,16 @@ const body = {
   parameters: parameters,
 };
 
-Object.assign(body, { tag: branch });
+const tag = commit;
+
+Object.assign(body, { tag: tag });
 
 const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;
 
 info(`Triggering CircleCI Pipeline for ${repoOrg}/${repoName}`);
 info(`Triggering URL: ${url}`);
 info(`Triggering commit: ${commit}`);
-info(`Triggering tag: ${commit}`);
+info(`Triggering tag: ${tag}`);
 info(`Parameters:\n${JSON.stringify(parameters)}`);
 endGroup();
 
