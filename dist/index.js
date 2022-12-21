@@ -16492,6 +16492,7 @@ const repoOrg = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner;
 const repoName = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo;
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Org: ${repoOrg}`);
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Repo: ${repoName}`);
+(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Context:\n${JSON.stringify(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context)}`);
 const ref = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.ref;
 
 const getBranch = () => {
@@ -16557,7 +16558,6 @@ const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipel
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Triggering URL: ${url}`);
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Triggering commit: ${commit}`);
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Triggering tag: ${tag}`);
-(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`(THIS IS NEW CODE)`);
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Parameters:\n${JSON.stringify(parameters)}`);
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.endGroup)();
 
