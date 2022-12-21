@@ -16495,7 +16495,7 @@ const repoName = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo;
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Context:\n${JSON.stringify(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context)}`);
 
 const getBranch = () => {
-  return context.payload.pull_request.head.ref;
+  return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.ref;
 }
 
 const getSha = () => {
@@ -16520,7 +16520,7 @@ const headers = {
 };
 
 const commit = getSha();
-const branch = getBranchActual();
+const branch = getBranch();
 
 const parameters = {
   GHA_Actor: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.actor,

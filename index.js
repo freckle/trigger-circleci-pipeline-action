@@ -42,7 +42,7 @@ const headers = {
 };
 
 const commit = getSha();
-const branch = getBranchActual();
+const branch = getBranch();
 
 const parameters = {
   GHA_Actor: context.actor,
