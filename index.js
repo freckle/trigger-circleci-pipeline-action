@@ -15,19 +15,10 @@ const repoName = context.repo.repo;
 info(`Org: ${repoOrg}`);
 info(`Repo: ${repoName}`);
 info(`Context:\n${JSON.stringify(context)}`);
-const ref = context.ref;
 
 const getBranch = () => {
-  if (ref.startsWith("refs/heads/")) {
-    return ref.substring(11);
-  } else if (ref.startsWith("refs/pull/")) {
-    info(`This is a PR. Using head PR branch`);
-    const pullRequestNumber = ref.match(/refs\/pull\/([0-9]*)\//)[1];
-    const newref = `pull/${pullRequestNumber}/head`;
-    return newref;
-  }
-  return ref;
-};
+  return context.payload.pull_request.head.ref;
+}
 
 const getSha = () => {
   const payload = context.payload;
@@ -51,7 +42,7 @@ const headers = {
 };
 
 const commit = getSha();
-const branch = getBranch();
+const branch = getBranchActual();
 
 const parameters = {
   GHA_Actor: context.actor,
