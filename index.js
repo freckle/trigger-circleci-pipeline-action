@@ -50,12 +50,13 @@ const headers = {
 };
 
 const commit = getSha();
+const branch = getBranch();
 
 const parameters = {
   GHA_Actor: context.actor,
   GHA_Action: context.action,
   GHA_Event: context.eventName,
-  GHA_Branch: getBranch(),
+  GHA_Branch: branch,
   GHA_Commit: commit,
 };
 
@@ -68,7 +69,7 @@ const body = {
   parameters: parameters,
 };
 
-Object.assign(body, { tag: commit });
+Object.assign(body, { tag: branch });
 
 const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;
 
