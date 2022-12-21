@@ -79,6 +79,7 @@ info(`Triggering CircleCI Pipeline for ${repoOrg}/${repoName}`);
 info(`Triggering URL: ${url}`);
 info(`Triggering commit: ${commit}`);
 info(`Triggering tag: ${tag}`);
+info(`(THIS IS NEW CODE)`);
 info(`Parameters:\n${JSON.stringify(parameters)}`);
 endGroup();
 
