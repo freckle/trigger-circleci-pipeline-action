@@ -16492,11 +16492,28 @@ const repoOrg = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner;
 const repoName = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo;
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Org: ${repoOrg}`);
 (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Repo: ${repoName}`);
-(0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`Context:\n${JSON.stringify(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context)}`);
+const ref = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.ref;
+
+const getBranchPrettier = () => {
+  if(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request) {
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`getBranchPrettier: pull request info found!`);
+    return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.ref;
+  }
+  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`getBranchPrettier: no pull request info found...`);
+  return getBranch();
+}
 
 const getBranch = () => {
-  return _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.ref;
-}
+  if (ref.startsWith("refs/heads/")) {
+    return ref.substring(11);
+  } else if (ref.startsWith("refs/pull/")) {
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.info)(`This is a PR. Using head PR branch`);
+    const pullRequestNumber = ref.match(/refs\/pull\/([0-9]*)\//)[1];
+    const newref = `pull/${pullRequestNumber}/head`;
+    return newref;
+  }
+  return ref;
+};
 
 const getSha = () => {
   const payload = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload;
@@ -16539,7 +16556,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = commit;
+const tag = getBranchPrettier();
 
 Object.assign(body, { tag: tag });
 
