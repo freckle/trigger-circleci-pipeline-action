@@ -22,10 +22,10 @@ const getBranchPrettier = () => {
     return context.payload.pull_request.head.ref;
   }
   info(`getBranchPrettier: no pull request info found...`);
-  return getBranch();
+  return getGHRef();
 }
 
-const getBranch = () => {
+const getGHRef = () => {
   if (ref.startsWith("refs/heads/")) {
     return ref.substring(11);
   } else if (ref.startsWith("refs/pull/")) {
@@ -59,7 +59,8 @@ const headers = {
 };
 
 const commit = getSha();
-const branch = getBranch();
+const branch = getBranchPrettier();
+const prRef = getGHRef();
 
 const parameters = {
   GHA_Actor: context.actor,
@@ -67,6 +68,7 @@ const parameters = {
   GHA_Event: context.eventName,
   GHA_Branch: branch,
   GHA_Commit: commit,
+  GHA_PR_Ref: prRef,
 };
 
 const metaData = getInput("GHA_Meta");
