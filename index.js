@@ -17,7 +17,16 @@ info(`Repo: ${repoName}`);
 const ref = context.ref;
 const headRef = process.env.GITHUB_HEAD_REF;
 
-const getBranch = () => {
+const getBranchPrettier = () => {
+  if(headRef) {
+    info(`getBranchPrettier: pull request info found!`);
+    return headRef;
+  }
+  info(`getBranchPrettier: no pull request info found...`);
+  return getGHRef();
+}
+
+const getGHRef = () => {
   if (ref.startsWith("refs/heads/")) {
     return ref.substring(11);
   } else if (ref.startsWith("refs/pull/") && headRef) {
@@ -47,11 +56,18 @@ const headers = {
   "x-attribution-actor-id": context.actor,
   "Circle-Token": `${process.env.CCI_TOKEN}`,
 };
+
+const commit = getSha();
+const branch = getBranchPrettier();
+const prRef = getGHRef();
+
 const parameters = {
   GHA_Actor: context.actor,
   GHA_Action: context.action,
   GHA_Event: context.eventName,
-  GHA_Branch: getBranch(),
+  GHA_Branch: branch,
+  GHA_Commit: commit,
+  GHA_PR_Ref: prRef,
 };
 
 const metaData = getInput("GHA_Meta");
@@ -63,7 +79,7 @@ const body = {
   parameters: parameters,
 };
 
-const tag = getSha();
+const tag = getBranchPrettier();
 
 Object.assign(body, { tag: tag });
 
@@ -71,6 +87,7 @@ const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipel
 
 info(`Triggering CircleCI Pipeline for ${repoOrg}/${repoName}`);
 info(`Triggering URL: ${url}`);
+info(`Triggering commit: ${commit}`);
 info(`Triggering tag: ${tag}`);
 info(`Parameters:\n${JSON.stringify(parameters)}`);
 endGroup();
