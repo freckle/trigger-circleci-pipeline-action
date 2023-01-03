@@ -18,9 +18,9 @@ const ref = context.ref;
 const headRef = process.env.GITHUB_HEAD_REF;
 
 const getBranchPrettier = () => {
-  if(context.payload.pull_request) {
+  if(headRef) {
     info(`getBranchPrettier: pull request info found!`);
-    return context.payload.pull_request.head.ref;
+    return headRef;
   }
   info(`getBranchPrettier: no pull request info found...`);
   return getGHRef();
